@@ -16,24 +16,38 @@ It provides a HTTP API for clients to manage any type of file providing the abil
 EXPLANATION
 
 Ability: Store files
-Request: POST 
+
+Request: POST
+
 URL: /api/file
 
+
 Ability: Get list of stored files
+
 Request: GET 
+
 URL: /api/file/all
 
 Ability: Delete files
+
 Request: DELETE 
+
 URL: /api/file/{filename}
+
 
 Ability: Download files
+
 Request: GET 
+
 URL: /api/file/{filename}
 
+
 Ability: Retrieve total used storage space
+
 Request: GET 
+
 URL: /api/file/space
+
 ----------------------------------------------------------------------------------------------------
 
 TESTING
