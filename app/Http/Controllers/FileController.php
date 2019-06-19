@@ -68,7 +68,7 @@ class FileController extends Controller
     private function CalculateFolderSize($path) {
         $bytesTotal = 0;
         $path = realpath($path);
-        if($path!==false && $path!='' && File::exists($path)){
+        if($path !== false && $path != '' && File::exists($path)){
             foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)) as $obj){
                 if ($obj->getFilename() <> 'testimage.jpg') {
                     $bytesTotal += $obj->getSize();
