@@ -50,10 +50,9 @@ class FileManagerTest extends TestCase
 
         $response->assertStatus(200);
 
-        // Assert the file was stored 
+        // Assert the file was stored
         // TODO- Investigate why this test always fails
         // Storage::disk('fake_uploads')->assertExists(public_path("uploads")."/fakeimage.jpg");
-
     }
 
     public function testDownloadFile()
@@ -69,5 +68,4 @@ class FileManagerTest extends TestCase
 
         $response->assertStatus(500);
     }
-    
 }
