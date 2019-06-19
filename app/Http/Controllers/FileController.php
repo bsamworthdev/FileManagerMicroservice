@@ -11,11 +11,13 @@ use App\Http\Controllers\FileSystemIterator;
 
 class FileController extends Controller
 {
-    public function downloadFile($fileName) {
+    public function downloadFile($fileName)
+    {
         return response()->download(public_path('uploads/'.$fileName));
     }
 
-    public function uploadFile(Request $request) {
+    public function uploadFile(Request $request)
+    {
         $fileName = $request->file('uploaded_file')->getClientOriginalName();
         
         //Move file to public/uploads folder
@@ -26,14 +28,15 @@ class FileController extends Controller
         $path = '/uploads/'.$fileName;
 
         return response()->json([
-            'url' => $url, 
+            'url' => $url,
             'path' => $path
         ], 200);
     }
 
-    public function deleteFile($fileName) {
+    public function deleteFile($fileName)
+    {
         $file_path = public_path('/uploads/').$fileName;
-        if(File::exists($file_path)){
+        if (File::exists($file_path)) {
             //Delete File
             if ($fileName <> 'testimage.jpg') {
                 File::delete($file_path);
@@ -41,14 +44,15 @@ class FileController extends Controller
         } else {
             //File does not exist
             return response()->json([
-                'status' => 'error', 
+                'status' => 'error',
                 'msg' => 'file not found'
             ], 404);
         }
         return response()->json(['status' => 'success'], 200);
     }
 
-    public function getAllFiles() {
+    public function getAllFiles()
+    {
         $files = [];
         //Build array of filenames of all files in uploads folder
         foreach (File::files(public_path('uploads')) as $file) {
@@ -60,16 +64,18 @@ class FileController extends Controller
         return response()->json(['files' => $files], 200);
     }
 
-    public function getStorageSpace() {
-        $size = $this->CalculateFolderSize(public_path('/uploads/'));
+    public function getStorageSpace()
+    {
+        $size = $this->calculateFolderSize(public_path('/uploads/'));
         return response()->json(['bytes' => $size], 200);
     }
 
-    private function CalculateFolderSize($path) {
+    private function calculateFolderSize($path)
+    {
         $bytesTotal = 0;
         $path = realpath($path);
-        if($path !== false && $path != '' && File::exists($path)){
-            foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)) as $obj){
+        if ($path !== false && $path != '' && File::exists($path)) {
+            foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)) as $obj) {
                 if ($obj->getFilename() <> 'testimage.jpg') {
                     $bytesTotal += $obj->getSize();
                 }
