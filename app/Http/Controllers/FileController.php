@@ -47,8 +47,12 @@ class FileController extends Controller
     }
 
     public function getAllFiles() {
+        $files = [];
         foreach (File::files(public_path('uploads')) as $file) {
-             $files[] = $file->getFilename();
+            $fileName = $file->getFilename();
+            if ($fileName <> "testimage.jpg") {
+                $files[] = $fileName;
+            }
         }
         return response()->json(['files' => $files], 200);
     }
@@ -63,7 +67,9 @@ class FileController extends Controller
         $path = realpath($path);
         if($path!==false && $path!='' && File::exists($path)){
             foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)) as $obj){
-                $bytesTotal += $obj->getSize();
+                if ($obj->getFilename() <> "testimage.jpg") {
+                    $bytesTotal += $obj->getSize();
+                }
             }
         }
         return $bytesTotal;

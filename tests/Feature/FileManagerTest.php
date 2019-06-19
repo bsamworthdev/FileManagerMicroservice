@@ -36,12 +36,12 @@ class FileManagerTest extends TestCase
     {
         $response = $this->get('/api/file/all');
 
-        $this->assertInternalType('array', $response->decodeResponseJson()['files']);
+        $this->assertIsArray($response->decodeResponseJson()['files']);
     }
 
     public function testUploadFile()
     {
-        Storage::fake('avatars');
+        Storage::fake('fake_uploads');
         $file = UploadedFile::fake()->image('fakeimage.jpg');
     
         $response = $this->json('POST', '/api/file', [
@@ -52,14 +52,14 @@ class FileManagerTest extends TestCase
 
         // Assert the file was stored 
         // TODO- Investigate why this test always fails
-        // Storage::disk('avatars')->assertExists(public_path("uploads")."/fakeimage.jpg");
+        // Storage::disk('fake_uploads')->assertExists(public_path("uploads")."/fakeimage.jpg");
 
     }
 
-    public function testDownloadFileReturnsStatusOk()
+    public function testDownloadFile()
     {
         $response = $this->get('/api/file/testimage.jpg');
-
+        
         $response->assertStatus(200);
     }
 
@@ -69,4 +69,5 @@ class FileManagerTest extends TestCase
 
         $response->assertStatus(500);
     }
+    
 }
