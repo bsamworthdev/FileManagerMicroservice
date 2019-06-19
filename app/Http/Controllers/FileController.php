@@ -35,7 +35,9 @@ class FileController extends Controller
         $file_path = public_path('/uploads/').$fileName;
         if(File::exists($file_path)){
             //Delete File
-            File::delete($file_path);
+            if ($fileName <> 'testimage.jpg') {
+                File::delete($file_path);
+            }
         } else {
             //File does not exist
             return response()->json([
@@ -48,9 +50,10 @@ class FileController extends Controller
 
     public function getAllFiles() {
         $files = [];
+        //Build array of filenames of all files in uploads folder
         foreach (File::files(public_path('uploads')) as $file) {
             $fileName = $file->getFilename();
-            if ($fileName <> "testimage.jpg") {
+            if ($fileName <> 'testimage.jpg') {
                 $files[] = $fileName;
             }
         }
@@ -62,12 +65,12 @@ class FileController extends Controller
         return response()->json(['bytes' => $size], 200);
     }
 
-    public function CalculateFolderSize($path) {
+    private function CalculateFolderSize($path) {
         $bytesTotal = 0;
         $path = realpath($path);
         if($path!==false && $path!='' && File::exists($path)){
             foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)) as $obj){
-                if ($obj->getFilename() <> "testimage.jpg") {
+                if ($obj->getFilename() <> 'testimage.jpg') {
                     $bytesTotal += $obj->getSize();
                 }
             }
