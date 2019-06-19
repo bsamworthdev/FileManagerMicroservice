@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('file/all', 'FileController@getAllFiles');
+Route::get('file/{fileName}', 'FileController@downloadFile');
+Route::post('file', 'FileController@uploadFile');
+Route::delete('file/{fileName}', 'FileController@deleteFile');
