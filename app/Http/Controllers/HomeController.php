@@ -23,7 +23,5 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $files = ['abc','cde'];
-        return view('home');
     }
 }
