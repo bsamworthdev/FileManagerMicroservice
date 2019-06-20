@@ -13,7 +13,7 @@ class FileController extends Controller
 {
     public function downloadFile($fileName)
     {
-        return response()->download(public_path('uploads/'.$fileName));
+        return response()->download(public_path('uploads/' . $fileName));
     }
 
     public function uploadFile(Request $request)
@@ -24,8 +24,8 @@ class FileController extends Controller
         $path = $request->file('uploaded_file')->move(public_path('/uploads/'), $fileName);
 
         //Fetch url and path
-        $url = url('api/file/'.$fileName);
-        $path = '/uploads/'.$fileName;
+        $url = url('api/file/' . $fileName);
+        $path = '/uploads/' . $fileName;
 
         return response()->json([
             'url' => $url,
@@ -35,7 +35,7 @@ class FileController extends Controller
 
     public function deleteFile($fileName)
     {
-        $file_path = public_path('/uploads/').$fileName;
+        $file_path = public_path('/uploads/') . $fileName;
         if (File::exists($file_path)) {
             //Delete File
             if ($fileName <> 'testimage.jpg') {
